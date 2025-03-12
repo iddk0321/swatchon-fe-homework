@@ -10,4 +10,4 @@ npm run dev
 ```
 
 ## 과제 문서
-[노션](https://swatchon.notion.site/FEATURE-1-quality-1b45904527478053bd78f903b4478452)
+[노션](https://swatchon.notion.site/1b3590452747803d8c0adad2202f6900)
