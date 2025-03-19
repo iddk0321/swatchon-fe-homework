@@ -1,7 +1,7 @@
 <template>
   <div class="view-qualities">
-    <div class="num-items">{{data?.total}} items</div>
-    <QualitiesGrid :qualities="data?.items" :loading="isFetching" />
+    <div class="num-items" :class="{hidden: isFetching}">{{ data?.total }} items</div>
+    <QualitiesGrid :qualities="data?.items" :loading="isFetching"/>
     <AppPagination :per-page="data?.perPage" :total="data?.total" :page="data?.page" @page="onPageChange"/>
   </div>
 </template>
@@ -30,6 +30,10 @@ const {data, isFetching} = useQualityItems(page)
   .num-items {
     font-size: 18px;
     font-weight: 600;
+  }
+
+  .hidden {
+    visibility: hidden;
   }
 
   .app-pagination {
