@@ -1,12 +1,24 @@
 <template>
   <div class="view-qualities">
-    <div class="num-items">n items</div>
-    <div>상품 목록</div>
-    <div>페이지네이션</div>
+    <div class="num-items">{{data?.total}} items</div>
+    <QualitiesGrid :qualities="data?.items" :loading="isFetching" />
+    <AppPagination :per-page="data?.perPage" :total="data?.total" :page="data?.page" @page="onPageChange"/>
   </div>
 </template>
 
 <script setup lang="ts">
+import {useQualityItems} from "@/composables/useQualityItems";
+import QualitiesGrid from "@/components/views/qualities/QualitiesGrid.vue";
+import AppPagination from "@/components/common/AppPagination.vue";
+import {ref} from "vue";
+
+const page = ref(1)
+
+const onPageChange = (newPage: number) => {
+  page.value = newPage
+}
+
+const {data, isFetching} = useQualityItems(page)
 </script>
 
 <style lang="scss" scoped>
