@@ -26,7 +26,7 @@
           <div class="quality-title lines-1">{{ quality.title }}</div>
           <div class="quality-price">${{ quality.price }}</div>
           <div
-            @click="addToCart"
+            @click="addToCart(quality.id)"
             class="add-to-cart">
             + ADD TO CART
           </div>
@@ -39,13 +39,19 @@
 <script setup lang="ts">
 import AppSkeleton from '@/components/app/AppSkeleton.vue'
 import type {Quality} from "@/services/api.ts";
+import {useAddToCart} from "@/composables/useAddToCart.ts";
 
 defineProps<{
   qualities?: Quality[]
   loading?: boolean
 }>()
 
-const addToCart = () => {}
+const { mutate: addToCartMutation } = useAddToCart()
+
+const addToCart = (qualityId: number) => {
+  addToCartMutation(qualityId)
+}
+
 </script>
 
 <style lang="scss" scoped>

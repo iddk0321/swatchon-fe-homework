@@ -18,7 +18,11 @@
 </template>
 
 <script setup lang="ts">
-const numItems = 5
+import {computed} from "vue";
+import {useCartBadgeCount} from "@/composables/useCartBadgeCount.ts";
+
+const { data } = useCartBadgeCount()
+const numItems = computed(() => data.value?.count ?? 0)
 </script>
 
 <style lang="scss" scoped>
