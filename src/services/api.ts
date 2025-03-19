@@ -7,7 +7,7 @@ export type Quality = {
   numProducts: number
 }
 
-export type QualityResponse  = {
+export type QualityResponse = {
   items: Quality[]
   total: number;
   page: number;
@@ -23,47 +23,34 @@ export type CartBadgeCountResponse = {
   count: number
 }
 
-export const fetchItems = async (page: number = 1): Promise<QualityResponse> => {
+const API_BASE_URL = '/api'
+const request = async <T>(endpoint: string, options?: RequestInit): Promise<T> => {
   try {
-    const response = await fetch(`/api/items?page=${page}`)
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, options)
     if (!response.ok) {
-      throw new Error('fetchItems failed')
+      throw new Error(`API request failed: ${endpoint} (status: ${response.status})`)
     }
     return await response.json()
   } catch (error) {
-    console.error('fetchFailed', error)
+    console.error(`Error occurred during API request: ${endpoint} ${endpoint}`, error)
     throw error
   }
 }
 
-export const addToCart = async (qualityId: number): Promise<CartQualityResponse> => {
-  try {
-    const response = await fetch(`/api/cart_qualities`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ qualityId })
-    })
-    if (!response.ok) {
-      throw new Error(`addToCard failed`)
-    }
-    return await response.json()
-  } catch (error) {
-    console.error('addToCard failed', error)
-    throw error
-  }
+export const fetchItems = async (page: number = 1) => {
+  return request<QualityResponse>(`/items?page=${page}`)
 }
 
-export const fetchCartBadgeCount = async (): Promise<CartBadgeCountResponse> => {
-  try {
-    const response = await fetch(`/api/count`)
-    if (!response.ok) {
-      throw new Error('fetchCartBadgeCount failed')
-    }
-    return await response.json()
-  } catch (error) {
-    console.error('fetchCartBadgeCount', error)
-    throw error
-  }
+export const addToCart = async (qualityId: number) => {
+  return request<CartQualityResponse>('/cart_qualities', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({qualityId})
+  })
+}
+
+export const fetchCartBadgeCount = async () => {
+  return request<CartBadgeCountResponse>('/count')
 }
