@@ -19,6 +19,10 @@ export type CartQualityResponse = {
   quality: Quality
 }
 
+export type CartBadgeCountResponse = {
+  count: number
+}
+
 export const fetchItems = async (page: number = 1): Promise<QualityResponse> => {
   try {
     const response = await fetch(`/api/items?page=${page}`)
@@ -47,6 +51,19 @@ export const addToCart = async (qualityId: number): Promise<CartQualityResponse>
     return await response.json()
   } catch (error) {
     console.error('addToCard failed', error)
+    throw error
+  }
+}
+
+export const fetchCartBadgeCount = async (): Promise<CartBadgeCountResponse> => {
+  try {
+    const response = await fetch(`/api/count`)
+    if (!response.ok) {
+      throw new Error('fetchCartBadgeCount failed')
+    }
+    return await response.json()
+  } catch (error) {
+    console.error('fetchCartBadgeCount', error)
     throw error
   }
 }
