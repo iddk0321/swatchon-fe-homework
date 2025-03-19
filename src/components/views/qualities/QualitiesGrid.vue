@@ -38,9 +38,10 @@
 
 <script setup lang="ts">
 import AppSkeleton from '@/components/app/AppSkeleton.vue'
+import type {Quality} from "@/services/api.ts";
 
 defineProps<{
-  qualities?: any
+  qualities?: Quality[]
   loading?: boolean
 }>()
 

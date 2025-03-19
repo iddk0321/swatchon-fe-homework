@@ -1,12 +1,17 @@
 <template>
   <div class="view-qualities">
     <div class="num-items">n items</div>
-    <div>상품 목록</div>
-    <div>페이지네이션</div>
+    <QualitiesGrid :qualities="data?.items" :loading="isFetching" />
+
   </div>
 </template>
 
 <script setup lang="ts">
+import {useQualityItems} from "@/composables/useQualityItems";
+import QualitiesGrid from "@/components/views/qualities/QualitiesGrid.vue";
+
+const page = 1;
+const {data, isFetching} = useQualityItems(page)
 </script>
 
 <style lang="scss" scoped>
